@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env/
+.env.*
+!.env.example
+
+# Data and generated outputs
+data/raw/
+data/interim/
+data/processed/
+reports/figures/
+reports/tables/
+mlruns/
+*.parquet
+*.feather
+*.pkl
+*.joblib
+
+# Notebooks and tools
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Temporary Microsoft Office lock files
+~$*
+
+# Logs and local run output
+*.log
+logs/
