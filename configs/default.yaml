@@ -1,0 +1,18 @@
+project:
+  name: retail-demand-forecasting
+
+data:
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+
+forecast:
+  horizon_days: 28
+  random_seed: 42
+
+logging:
+  level: INFO
+
+tracking:
+  experiment_name: phase1-setup
+  output_dir: reports/experiments

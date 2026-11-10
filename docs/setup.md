@@ -1,51 +1,96 @@
 # Setup Guide
 
-This guide describes the intended clean-machine setup. The exact commands must stay aligned with the dependency files in the repository.
-
 ## Requirements
 
 - Git.
-- A supported Python version.
-- Access to the M5 dataset source.
-- PowerShell on Windows, or equivalent shell commands on another operating system.
+- Python 3.11.
+- Windows PowerShell for the commands below.
+- Access to the M5 Forecasting Accuracy dataset on Kaggle.
 
-## Create the environment
+The initial setup was checked using Python 3.11.13 on Windows.
 
-From the repository root:
+## Create the Python environment
+
+Run these commands from the repository root.
+For a new installation, confirm that python refers to Python 3.11
+before creating the environment.
 
 ```powershell
 python --version
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip check
 ```
 
-If the project later moves to a different dependency manager, update this guide and `README.md` together.
+Activation is optional because these commands use the environment's
+Python executable directly.
+
+## Create local data folders
+
+Git does not preserve empty folders, and our data folders are ignored.
+Create them on each new checkout:
+
+```powershell
+New-Item -ItemType Directory -Force -Path data/raw,data/interim,data/processed
+```
+
+## Download the data
+
+Download the dataset from:
+https://www.kaggle.com/competitions/m5-forecasting-accuracy/data
+
+Sign in and review any access requirements shown by Kaggle.
+
+Extract and place these files directly inside data/raw/:
+
+- calendar.csv
+- sales_train_evaluation.csv
+- sell_prices.csv
+
+Keep the original files unchanged. Do not commit the full dataset.
 
 ## Verify the setup
 
-The verification command should check imports, configuration loading, logging, and the expected directory structure:
-
 ```powershell
-python scripts/verify_setup.py
-pytest
+.\.venv\Scripts\python.exe scripts/verify_setup.py
+.\.venv\Scripts\python.exe scripts/verify_data.py
 ```
 
-## Data setup
+The setup check loads configuration, checks the configured data
+directories, and saves and reopens an experiment record.
 
-Download the M5 files from the documented source and place them in `data/raw/`. Do not commit the full dataset.
+The data check reads five rows per file and checks required columns.
+It is not full validation of missing values, duplicates, or dates.
 
-The data verification script should check expected files, columns, dates, keys, missing values, and duplicate rows.
+## Configuration and logging
 
-## Reproducibility
+Project settings are stored in configs/default.yaml.
 
-Record the following for each experiment:
+Logging currently writes timestamped messages to the terminal.
+It does not save a log file.
 
-- Source-data snapshot or version.
-- Configuration file.
-- Python and package versions.
-- Random seed.
-- Model version.
-- Forecast origin and test period.
-- Output location.
+## Experiment records
+
+Local JSON records are saved in reports/experiments/.
+The tracking code creates this directory when needed.
+
+Each record currently includes:
+
+- Run identifier and UTC timestamp.
+- Experiment name.
+- Python version.
+- Configuration snapshot.
+- Metrics supplied by the caller.
+- Notes.
+
+Setup checks have empty metrics because no model has been trained.
+Data versions, model versions, and evaluation periods will be added
+when the forecasting pipeline is implemented.
+
+## Verification completed
+
+Dependencies were installed in a separate fresh environment on the
+same Windows computer. Dependency consistency, setup checks, and
+basic data-access checks passed.
+
+A clean-clone test and testing on other computers remain outstanding.

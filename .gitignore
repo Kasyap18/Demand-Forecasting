@@ -16,6 +16,10 @@ env/
 .env.*
 !.env.example
 
+# Local verification environment and experiment output
+.venv-check/
+reports/experiments/
+
 # Data and generated outputs
 data/raw/
 data/interim/
@@ -50,3 +54,8 @@ Thumbs.db
 # Logs and local run output
 *.log
 logs/
+
+
+# Original M5 download and extracted copy
+/m5-forecasting-accuracy.zip
+/m5-forecasting-accuracy/

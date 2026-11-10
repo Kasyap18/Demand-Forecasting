@@ -76,19 +76,29 @@ It contains:
 
 ## Quick start
 
-The project setup will use a documented Python environment. The intended workflow is:
+Use Python 3.11. See [the setup guide](docs/setup.md) for complete
+installation and M5 download instructions.
+
+For a new installation, run from the repository root:
 
 ```powershell
 python --version
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python scripts/verify_setup.py
-pytest
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip check
+New-Item -ItemType Directory -Force -Path data/raw,data/interim,data/processed
 ```
 
-The commands will be updated when the dependency files and setup scripts are added.
+Download and extract the three M5 files listed in the setup guide
+into data/raw/, then run:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/verify_setup.py
+.\.venv\Scripts\python.exe scripts/verify_data.py
+```
+
+These checks verify setup integration and basic data access.
+Full data validation and forecasting are not implemented yet.
 
 ## Working safely
 
@@ -104,11 +114,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the short contribution rules and the 
 
 ## Current next steps
 
-1. Review the Phase 1 alignment pull request.
-2. Confirm the open project decisions.
-3. Add the reproducible Python setup.
-4. Add M5 download and validation scripts.
-5. Begin data understanding and baseline forecasting.
+1. Finalize the evaluation metrics and their definitions.
+2. Complete the research evidence register with verified sources.
+3. Review Phase 1 deliverables and remaining setup documentation.
+4. Begin Phase 2 data exploration and full data validation.
+5. Implement baseline forecasting after data validation.
+
 
 ## License and data
 
